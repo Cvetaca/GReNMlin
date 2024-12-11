@@ -2,12 +2,14 @@ import simulator, grn
 import numpy as np
 
 
-def full_adder(id,X,Y,Cin,SUM,Cout,FA: grn.grn,zero):
-
-    Cin="ZERO" if zero else "Cin"
+def full_adder(id,X,Y,Cin,SUM,Cout,FA: grn.grn):
+    #all_species = []
     FA.add_species("O1"+str(id), 0.1)
     FA.add_species("O2"+str(id), 0.1)
     FA.add_species("O3"+str(id), 0.1)
+    #all_species.append("O1"+str(id))
+    #all_species.append("O2"+str(id))
+    #all_species.append("O3"+str(id))
     
     
 
@@ -53,6 +55,7 @@ def full_adder(id,X,Y,Cin,SUM,Cout,FA: grn.grn,zero):
                         {'name': 'O3'+str(id), 'type': 1, 'Kd': 5, 'n': 3}]
     ResO2orO3 = [{'name': Cout}]
     FA.add_gene(10, O2orO3, ResO2orO3,"or")
+    #return all_species
 
 if __name__=="__main__":
     FA=grn.grn()
