@@ -8,8 +8,8 @@ CSM = grn.grn()
 def int_to_binary(num):
     return format(num, 'b')
 
-num1 = int(input("Vnesi 4 bitno stevilo: "))
-num2 = int(input("Vnesi drugo 4 bitno stevilo: "))
+num1 = int(input("Vnesi n bitno stevilo: "))
+num2 = int(input("Vnesi drugo n bitno stevilo: "))
 
 X = int_to_binary(num1)
 Y = int_to_binary(num2)
@@ -27,14 +27,16 @@ CSM.add_input_species("ZERO")
 input_species = []
 
 #Adding input species for A
-for i in range(lenX,-1,-1):
+for i in range(lenX-1,-1,-1):
     CSM.add_input_species("X"+str(i))
     input_species.append("X"+str(i))
 
 #Adding input species for B
-for i in range(lenY,-1,-1):
+for i in range(lenY-1,-1,-1):
     CSM.add_input_species("Y"+str(i))
     input_species.append("Y"+str(i))
+
+print(input_species)
 
 out_indexes = []
 
@@ -52,7 +54,7 @@ for i in range(lenX+1): #Iterating through the bits of B
         #For all other rows, we perform Xi and Yj and add the carry from the previous row and the sum from 
         #the previous row on j+1
         #The full adder takes X = Xi and Yi, Y = POFAS(i-1,j+i), Cin = POFAC(i-1,j)
-        elif i > 0 and i < lenX+1:
+        elif i > 0 and i < lenX:
             CSM.add_species("POA"+str(i)+str(j), 0.1) #Partial Output AND
 
             and_.and_("X"+str(i), "Y"+str(j), "POA"+str(i)+str(j), CSM) #AND gate betwee Xi and Yj
@@ -65,7 +67,7 @@ for i in range(lenX+1): #Iterating through the bits of B
                 spec = full_adder.full_adder(str(i)+str(j), "POA"+str(i)+str(j), "POFAS"+str(i-1)+str(j+1), 
                                         "POFAC"+str(i-1)+str(j), "POFAS"+str(i)+str(j), "POFAC"+str(i)+str(j), CSM)
                 out_indexes.append("POFAS"+str(i)+str(j))
-        elif i == lenX+1: #When we are past the last bit of X and i == 0, the X is ZERO
+        elif i == lenX: #When we are past the last bit of X and i == 0, the X is ZERO
 
             if j == 0: #The X is ZERO
                 spec = full_adder.full_adder(str(i)+str(j), "ZERO", "POFAS"+str(i-1)+str(j+1),
@@ -83,6 +85,7 @@ for i in range(lenX+1): #Iterating through the bits of B
 T_FA, Y_FA = simulator.simulate_single(CSM, input_tuple,t_end=1000)
 
 final_output=[]
+print(out_indexes)
 for a in out_indexes:
     if Y_FA[:, CSM.species_names.index(a)][-1]>50:
         final_output.append(str(1))

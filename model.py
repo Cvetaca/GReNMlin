@@ -1,12 +1,10 @@
 import numpy as np 
 
 def solve_model(T,state):
-    ZERO, X2, X1, X0, Y2, Y1, Y0, POFAS00, POFAC00, O100, O200, O300, POFAS01, POFAC01, O101, O201, O301, POFAS10, POFAC10, POA10, O110, O210, O310, POFAS11, POFAC11, POA11, O111, O211, O311, POFAS20, POFAC20, POA20, O120, O220, O320, POFAS21, POFAC21, POA21, O121, O221, O321 = state
+    ZERO, X1, X0, Y1, Y0, POFAS00, POFAC00, O100, O200, O300, POFAS01, POFAC01, O101, O201, O301, POFAS10, POFAC10, POA10, O110, O210, O310, POFAS11, POFAC11, POA11, O111, O211, O311, POFAS20, POFAC20, O120, O220, O320, POFAS21, POFAC21, O121, O221, O321 = state
     dZERO = -ZERO*0
-    dX2 = -X2*0
     dX1 = -X1*0
     dX0 = -X0*0
-    dY2 = -Y2*0
     dY1 = -Y1*0
     dY0 = -Y0*0
     dPOFAS00 = -POFAS00*0.1+10*(((ZERO/5)**3))/(1+((O100/5)**2)+((ZERO/5)**3)+((O100/5)**2)*((ZERO/5)**3))+10*(((O100/5)**2))/(1+((O100/5)**2)+((ZERO/5)**3)+((O100/5)**2)*((ZERO/5)**3))
@@ -33,17 +31,15 @@ def solve_model(T,state):
     dO311 = -O311*0.1+10*(((POA11/5)**2)*((ZERO/5)**3))/(1+((POA11/5)**2)+((ZERO/5)**3)+((POA11/5)**2)*((ZERO/5)**3))
     dPOFAS20 = -POFAS20*0.1+10*(((POFAC10/5)**3))/(1+((O120/5)**2)+((POFAC10/5)**3)+((O120/5)**2)*((POFAC10/5)**3))+10*(((O120/5)**2))/(1+((O120/5)**2)+((POFAC10/5)**3)+((O120/5)**2)*((POFAC10/5)**3))
     dPOFAC20 = -POFAC20*0.1+10*(((O220/5)**2)+((O320/5)**3)+((O220/5)**2)*((O320/5)**3))/(1+((O220/5)**2)+((O320/5)**3)+((O220/5)**2)*((O320/5)**3))
-    dPOA20 = -POA20*0.1+10*(((X2/5)**2)*((Y0/5)**3))/(1+((X2/5)**2)+((Y0/5)**3)+((X2/5)**2)*((Y0/5)**3))
-    dO120 = -O120*0.1+10*(((POFAS11/5)**3))/(1+((POA20/5)**2)+((POFAS11/5)**3)+((POA20/5)**2)*((POFAS11/5)**3))+10*(((POA20/5)**2))/(1+((POA20/5)**2)+((POFAS11/5)**3)+((POA20/5)**2)*((POFAS11/5)**3))
+    dO120 = -O120*0.1+10*(((POFAS11/5)**3))/(1+((ZERO/5)**2)+((POFAS11/5)**3)+((ZERO/5)**2)*((POFAS11/5)**3))+10*(((ZERO/5)**2))/(1+((ZERO/5)**2)+((POFAS11/5)**3)+((ZERO/5)**2)*((POFAS11/5)**3))
     dO220 = -O220*0.1+10*(((O120/5)**2)*((POFAC10/5)**3))/(1+((O120/5)**2)+((POFAC10/5)**3)+((O120/5)**2)*((POFAC10/5)**3))
-    dO320 = -O320*0.1+10*(((POA20/5)**2)*((POFAS11/5)**3))/(1+((POA20/5)**2)+((POFAS11/5)**3)+((POA20/5)**2)*((POFAS11/5)**3))
+    dO320 = -O320*0.1+10*(((ZERO/5)**2)*((POFAS11/5)**3))/(1+((ZERO/5)**2)+((POFAS11/5)**3)+((ZERO/5)**2)*((POFAS11/5)**3))
     dPOFAS21 = -POFAS21*0.1+10*(((POFAC11/5)**3))/(1+((O121/5)**2)+((POFAC11/5)**3)+((O121/5)**2)*((POFAC11/5)**3))+10*(((O121/5)**2))/(1+((O121/5)**2)+((POFAC11/5)**3)+((O121/5)**2)*((POFAC11/5)**3))
     dPOFAC21 = -POFAC21*0.1+10*(((O221/5)**2)+((O321/5)**3)+((O221/5)**2)*((O321/5)**3))/(1+((O221/5)**2)+((O321/5)**3)+((O221/5)**2)*((O321/5)**3))
-    dPOA21 = -POA21*0.1+10*(((X2/5)**2)*((Y1/5)**3))/(1+((X2/5)**2)+((Y1/5)**3)+((X2/5)**2)*((Y1/5)**3))
-    dO121 = -O121*0.1+10*(((ZERO/5)**3))/(1+((POA21/5)**2)+((ZERO/5)**3)+((POA21/5)**2)*((ZERO/5)**3))+10*(((POA21/5)**2))/(1+((POA21/5)**2)+((ZERO/5)**3)+((POA21/5)**2)*((ZERO/5)**3))
+    dO121 = -O121*0.1+10*(((ZERO/5)**3))/(1+((POFAC20/5)**2)+((ZERO/5)**3)+((POFAC20/5)**2)*((ZERO/5)**3))+10*(((POFAC20/5)**2))/(1+((POFAC20/5)**2)+((ZERO/5)**3)+((POFAC20/5)**2)*((ZERO/5)**3))
     dO221 = -O221*0.1+10*(((O121/5)**2)*((POFAC11/5)**3))/(1+((O121/5)**2)+((POFAC11/5)**3)+((O121/5)**2)*((POFAC11/5)**3))
-    dO321 = -O321*0.1+10*(((POA21/5)**2)*((ZERO/5)**3))/(1+((POA21/5)**2)+((ZERO/5)**3)+((POA21/5)**2)*((ZERO/5)**3))
-    return np.array([dZERO, dX2, dX1, dX0, dY2, dY1, dY0, dPOFAS00, dPOFAC00, dO100, dO200, dO300, dPOFAS01, dPOFAC01, dO101, dO201, dO301, dPOFAS10, dPOFAC10, dPOA10, dO110, dO210, dO310, dPOFAS11, dPOFAC11, dPOA11, dO111, dO211, dO311, dPOFAS20, dPOFAC20, dPOA20, dO120, dO220, dO320, dPOFAS21, dPOFAC21, dPOA21, dO121, dO221, dO321])
+    dO321 = -O321*0.1+10*(((POFAC20/5)**2)*((ZERO/5)**3))/(1+((POFAC20/5)**2)+((ZERO/5)**3)+((POFAC20/5)**2)*((ZERO/5)**3))
+    return np.array([dZERO, dX1, dX0, dY1, dY0, dPOFAS00, dPOFAC00, dO100, dO200, dO300, dPOFAS01, dPOFAC01, dO101, dO201, dO301, dPOFAS10, dPOFAC10, dPOA10, dO110, dO210, dO310, dPOFAS11, dPOFAC11, dPOA11, dO111, dO211, dO311, dPOFAS20, dPOFAC20, dO120, dO220, dO320, dPOFAS21, dPOFAC21, dO121, dO221, dO321])
 
 def solve_model_steady(state):
     return solve_model(0, state)
