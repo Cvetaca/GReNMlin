@@ -8,9 +8,25 @@ from collections import Counter
 AM=grn.grn()
 #full_adder.full_adder(1,test)
 
-lenA=4
-lenB=4
+
+
+def int_to_binary(num):
+    return format(num, 'b')
+
+
+num1 = int(input("Vnesi n bitno stevilo: "))
+num2 = int(input("Vnesi drugo m bitno stevilo: "))
+
+bin_num1 = int_to_binary(num1)
+bin_num2 = int_to_binary(num2)
+
+lenA=len(bin_num1)
+lenB=len(bin_num2)
 lenOut=lenA+lenB
+
+
+input_tuple = (0,) + tuple(int(bit)*100 for bit in bin_num1 + bin_num2)
+print(input_tuple)
 
 AM.add_input_species("ZERO")
 #all_species=[]
@@ -66,24 +82,12 @@ for i in range(1,lenB):
             out_indexes.append("POFAC"+str(i)+str(j))
             #print("Grouped on OUT"+str(i+j+1))
 
-def int_to_4bit_binary(num):
-    return format(num, '04b')
 
-
-num1 = int(input("Vnesi 4 bitno stevilo (0-15): "))
-num2 = int(input("Vnesi drugo 4 bitno stevilo (0-15): "))
-
-bin_num1 = int_to_4bit_binary(num1)
-bin_num2 = int_to_4bit_binary(num2)
-
-
-input_tuple = (0,) + tuple(int(bit)*100 for bit in bin_num1 + bin_num2)
-print(input_tuple)
-T_FA, Y_FA = simulator.simulate_single(AM, input_tuple,t_end=4000)
+T_FA, Y_FA = simulator.simulate_single(AM, input_tuple,t_end=1000)
 
 final_output=[]
 for a in out_indexes:
-    if Y_FA[:, AM.species_names.index(a)][-1]>20:
+    if Y_FA[:, AM.species_names.index(a)][-1]>50:
         final_output.append(str(1))
     else:
         final_output.append(str(0))
