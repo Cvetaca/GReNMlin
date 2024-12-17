@@ -56,6 +56,7 @@ def full_adder(id,X,Y,Cin,SUM,Cout,FA: grn.grn):
     ResO2orO3 = [{'name': Cout}]
     FA.add_gene(10, O2orO3, ResO2orO3,"or")
     #return all_species
+    FA.genes
 
 if __name__=="__main__":
     FA=grn.grn()
@@ -65,7 +66,7 @@ if __name__=="__main__":
     FA.add_input_species("Cin")
     FA.add_species("SUM", 0.1)
     FA.add_species("Cout", 0.1)
-    full_adder(1,"A","B","Cin","SUM","Cout",FA,False)
+    full_adder(1,"A","B","Cin","SUM","Cout",FA)
     import matplotlib.pyplot as plt
     FA.plot_network
     T_FA, Y_FA = simulator.simulate_sequence(FA, [(0,0,0),(0,0,100),(0,100,0),(0,100,100),(100,0,0),(100,0,100),(100,100,0),(100,100,100)], t_single=500)
