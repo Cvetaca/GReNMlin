@@ -8,7 +8,7 @@ def int_to_binary(num):
     return format(num, 'b')
 
 num1 = int(input("Vnesi n bitno stevilo: "))
-num2 = int(input("Vnesi drugo n bitno stevilo: "))
+num2 = int(input("Vnesi drugo m bitno stevilo: "))
 
 X = int_to_binary(num1)
 A = int_to_binary(num2)
